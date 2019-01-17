@@ -21,3 +21,11 @@ class User:
         self.password = generate_password_hash(password)
         self.isadmin = False
         self.time_created = datetime.now()
+
+    """ Method for creating a new user """
+    def add_new_user(self):
+        user = """ INSERT INTO users (fname, lname, email, password, isadmin, time_created) 
+        VALUES ('{}','{}','{}','{}','{}', '{}') """\
+        .format(self.fname, self.lname, self.email, self.password,  self.isadmin, self.time_created)
+        cur.execute(user)
+        conn.commit()
