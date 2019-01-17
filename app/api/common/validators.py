@@ -27,5 +27,11 @@ def common(expected_payload, data):
                 msg = 'The {} can not be empty'.format(item)
                 return {"Status":400, "Message":msg},400
 
+def valid_email(email):
+    if not \
+    re.match(r"^[_a-zA-Z0-9-]+(\.[_a-zA-Z0-9-]+)*@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*(\.[a-zA-Z]{2,4})$", email):
+        msg = 'Please enter a valid email'
+        return {'Status':406,"Message":msg},406
+
 
 
