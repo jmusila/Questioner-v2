@@ -29,3 +29,12 @@ class User:
         .format(self.fname, self.lname, self.email, self.password,  self.isadmin, self.time_created)
         cur.execute(user)
         conn.commit()
+
+    
+    """ Method for user profile """
+    def user_data(self):
+
+        return dict(fname =self.fname, 
+                    lname = self.lname,
+                    email = self.email,
+                    isadmin = self.isadmin)
