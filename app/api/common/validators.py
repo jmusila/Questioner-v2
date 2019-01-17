@@ -33,5 +33,23 @@ def valid_email(email):
         msg = 'Please enter a valid email'
         return {'Status':406,"Message":msg},406
 
+def new_user_validator(data):
+    """
+    Validate a new user inputs
+    """
 
+    pay_load = ['fname', 'lname', 'email', 'password']
+    res = common(pay_load, data)
+    if not res:
+        for item, value in data.items():
+            if not isinstance(value, str):
+                msg = 'The {} field is supposed to be a string'.format(item)
+                res = {"Status":406,"Message":msg},406
+            if item == 'password':
+                if len(item) < 8:
+                    msg = 'The {} must have atleast eight characters'
+                    res= {"Status":406,"Message":msg},406
+            if item == 'email':
+                res = valid_email(value)
+    return res
 
