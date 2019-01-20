@@ -33,12 +33,13 @@ def valid_email(email):
         msg = 'Please enter a valid email'
         return {'Status':406,"Message":msg},406
 
+
 def new_user_validator(data):
     """
     Validate a new user inputs
     """
 
-    pay_load = ['fname', 'lname', 'email', 'password']
+    pay_load = ['firstname', 'lastname', 'phoneNumber', 'username', 'email', 'password']
     res = common(pay_load, data)
     if not res:
         for item, value in data.items():
