@@ -9,9 +9,11 @@ class UserRegister:
     """
     v2 = Namespace('Users', description = 'User Routes')
     users = v2.model('User', {
-        'fname': fields.String(required=True, description='This is the user firstname'),
-        'lname': fields.String(required=True, description='This is the user lastname'),
+        'firstname': fields.String(required=True, description='This is the user firstname'),
+        'lastname': fields.String(required=True, description='This is the user lastname'),
         'email': fields.String(required=True, description='The user email'),
+        'phoneNumber': fields.String(required=True, description='This phone number of the user'),
+        'username': fields.String(required=True, description='This is the username'),
         'password': fields.String(required=True, description='The user password'),
     })
 class UserLogin:
