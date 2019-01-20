@@ -20,17 +20,21 @@ class SignUp(Resource):
     def post(self):
         '''Sign up a user'''
         data = request.get_json()
-        isadmin = False
         if not new_user_validator(data):
             check_exists = get_user_by_email(data['email'])
+            check_exists2 = get_user_by_username(data['username'])
             if check_exists:
                 return {'Status': 409, 'Message':"Email already exists!"},409
-            isadmin = False
-            create_user = User(data['fname'],
-							data['lname'],
+            if check_exists2:
+                return {'Status': 409, 'Message':"Username already exists!"},409
+            isAdmin = False
+            create_user = User(data['firstname'],
+							data['lastname'],  
 							data['email'],
+                            data['phoneNumber'],
+                            data['username'],
 							data['password'],
-							isadmin)
+							isAdmin)
             create_user.add_new_user()
             user = create_user.user_data()
 
