@@ -31,8 +31,8 @@ def create_tables():
     A fucntion to create all the tables
     """
     queries = tables()
-    for q in queries:
-        cur.execute(q)
+    for query in queries:
+        cur.execute(query)
     conn.commit()
 
 def drop_all():
