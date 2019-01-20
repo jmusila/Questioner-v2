@@ -14,27 +14,30 @@ cur = conn.cursor()
 
 class User:
     """ User constructor method """
-    def __init__(self, fname, lname, email, password, isadmin):
-        self.fname = fname
-        self.lname = lname
+    def __init__(self, firstname, lastname, email, phoneNumber, username, password, isAdmin):
+        self.firstname = firstname
+        self.lastname = lastname
         self.email = email
+        self.phoneNumber = phoneNumber
+        self.username = username
         self.password = generate_password_hash(password)
-        self.isadmin = False
+        self.isAdmin = isAdmin
         self.time_created = datetime.now()
+
 
     """ Method for creating a new user """
     def add_new_user(self):
-        user = """ INSERT INTO users (fname, lname, email, password, isadmin, time_created) 
-        VALUES ('{}','{}','{}','{}','{}', '{}') """\
-        .format(self.fname, self.lname, self.email, self.password,  self.isadmin, self.time_created)
+        user = """ INSERT INTO users (firstname, lastname, email, phoneNumber, username, password, isAdmin, time_created) 
+        VALUES ('{}','{}','{}','{}','{}', '{}' , '{}' , '{}') """\
+        .format(self.firstname, self.lastname, self.email, self.phoneNumber, self.username, self.password,  self.isAdmin, self.time_created)
         cur.execute(user)
         conn.commit()
 
-    
     """ Method for user profile """
     def user_data(self):
-
-        return dict(fname =self.fname, 
-                    lname = self.lname,
+        return dict(firstname =self.firstname, 
+                    lastname = self.lastname,
                     email = self.email,
-                    isadmin = self.isadmin)
+                    phoneNumber = self.phoneNumber,
+                    username = self.username,
+                    isAdmin = self.isAdmin)
