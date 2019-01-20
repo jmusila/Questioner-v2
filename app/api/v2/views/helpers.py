@@ -12,3 +12,11 @@ def get_user_by_email(email):
     cur.execute("SELECT * FROM users WHERE email='{}';".format(email))
     user = cur.fetchone()
     return user
+
+def get_user_by_username(username):
+    """
+    Fetch a single user by thier username
+    """
+    cur.execute("SELECT * FROM users WHERE username='{}';".format(username))
+    user = cur.fetchone()
+    return user
