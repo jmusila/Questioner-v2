@@ -2,7 +2,7 @@
 from flask_restplus import Resource
 from flask import request, abort
 from werkzeug.security import check_password_hash 
-from .helpers import get_user_by_email
+from .helpers import get_user_by_email, get_user_by_username
 from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required,get_raw_jwt
 
 #Local imports
