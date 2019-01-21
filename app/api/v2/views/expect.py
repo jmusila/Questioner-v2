@@ -40,3 +40,4 @@ class MeetupModel:
         'happeningOn': fields.String(required=True, description='The time the meetup will happen'),
         'tags': fields.String(required=True, description='The meetup tags'),
     })
+    
