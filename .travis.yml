@@ -19,8 +19,6 @@ script:
   - export APP_SETTINGS="testing"
   - export SECRET="iamsecretethenuseentheunknowntheundead"
   - export Test_URL="dbname=quest user=jonathan password=123jonA"
-  - pytest
-
   - coverage run --source=app -m pytest && coverage report
 
 after_success:
