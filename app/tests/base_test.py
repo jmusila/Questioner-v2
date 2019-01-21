@@ -1,7 +1,4 @@
-"""
-This will contain the base tests configuration.
-Thi will be reused/imported in almost all the tests.
-"""
+""" Base tests module """
 
 import unittest
 import json

@@ -24,12 +24,13 @@ def create_app(config_name):
     app.config.from_object(app_config[config_name])
     app.url_map.strict_slashes = False 
 
-    create_tables()
+    create_tables() 
     app.config['JWT_SECRET_KEY'] = secret_key
-    app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(hours=3)
+    app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(hours=2)
     app.config['JWT_BLACKLIST_TOKEN_CHECKS'] = ['access']
     jwt = JWTManager(app)
     cur = conn.cursor()
+
     from .api.v2.routes import version2 as v_2
     app.register_blueprint(v_2)
 

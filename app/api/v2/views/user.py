@@ -2,13 +2,16 @@
 from flask_restplus import Resource
 from flask import request, abort
 from werkzeug.security import check_password_hash 
+from app.api.v2.db_config import conn
 from .helpers import get_user_by_email, get_user_by_username
 from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required,get_raw_jwt
 
 #Local imports
 from app.api.v2.models.user import User
-from app.api.v2.views.expect import UserRegister
+from app.api.v2.views.expect import UserRegister, UserLogin
 from app.api.common.validators import valid_email, new_user_validator
+
+cur = conn.cursor()
 
 new_user = UserRegister().users
 v2 = UserRegister().v2
@@ -40,3 +43,24 @@ class SignUp(Resource):
 
             return {'Status': 201, 'Message': "User registered successfully", 'User': user}, 201
         return new_user_validator(data)
+        
+@v2.route('/login')
+class Login(Resource):
+
+    @v2.expect(new_user)
+    def post(self):
+        '''Login to Questioner '''
+        data = request.get_json()
+        email = "".join(data['email'].split())
+        password = "".join(data['password'].split())
+        if email  == '':
+            msg = 'The email field can not be empty'
+            return {"Status":400, "Message":msg},400
+        if password=='':
+            msg = 'The password field can not be empty'
+            return {"Status":400, "Message":msg},400
+        current_user = get_user_by_email(email)
+        if not current_user or not check_password_hash(current_user[6], password):
+            return {'Message': 'User {} does not exist'.format(data['email'])}, 400
+        access_token = create_access_token(identity = data['email'])
+        return {"Status": 200, "access_token": access_token}, 200
