@@ -18,7 +18,7 @@ before_script:
 script: 
   - export APP_SETTINGS="testing"
   - export SECRET="iamsecretethenuseentheunknowntheundead"
-  - export Test_URL="dbname=Quest user=jonathan password=123jonA"
+  - export Test_URL="dbname=quest user=jonathan password=123jonA"
   - pytest --cov-report term-missing --cov=app
 
   - coveralls
