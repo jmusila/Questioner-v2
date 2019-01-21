@@ -18,7 +18,7 @@ class Meetup:
    
     """ Method creating a meetup """
     def add_new_meetup(self):
-        user = """ INSERT INTO meetups (location, images, title, happeningOn, tags, time_added) 
+        meetup = """ INSERT INTO meetups (location, images, title, happeningOn, tags, time_added) 
         VALUES ('{}','{}','{}','{}','{}', '{}') """\
         .format(self.location, self.images, self.title, self.tags, self.happeningOn, self.time_added)
         cur.execute(user)
