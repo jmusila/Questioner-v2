@@ -25,7 +25,6 @@ def create_app(config_name):
     app.url_map.strict_slashes = False 
 
     create_tables()
-    # create_admin()
     app.config['JWT_SECRET_KEY'] = secret_key
     app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(hours=2)
     app.config['JWT_BLACKLIST_TOKEN_CHECKS'] = ['access']
