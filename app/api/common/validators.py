@@ -1,4 +1,6 @@
 import re
+from functools import wraps
+from flask_jwt_extended import get_jwt_identity
 
 
 
@@ -33,6 +35,11 @@ def valid_email(email):
         msg = 'Please enter a valid email'
         return {'Status':406,"Message":msg},406
 
+def valid_phone_number(phoneNumber):
+    if not \
+    re.match(r"^([01]{1})?[-.\s]?\(?(\d{3})\)?[-.\s]?(\d{3})[-.\s]?(\d{4})\s?((?:#|ext\.?\s?|x\.?\s?){1}(?:\d+)?)?$", phoneNumber):
+        msg = 'Please enter a valid phone number'
+        return {'Status':406,"Message":msg},406
 
 def new_user_validator(data):
     """
@@ -52,5 +59,6 @@ def new_user_validator(data):
                     res= {"Status":406,"Message":msg},406
             if item == 'email':
                 res = valid_email(value)
+            if item == 'phoneNumber':
+                res = valid_phone_number(value)
     return res
-
