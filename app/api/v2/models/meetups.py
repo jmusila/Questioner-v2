@@ -21,7 +21,7 @@ class Meetup:
         meetup = """ INSERT INTO meetups (location, images, title, happeningOn, tags, time_added) 
         VALUES ('{}','{}','{}','{}','{}', '{}') """\
         .format(self.location, self.images, self.title, self.tags, self.happeningOn, self.time_added)
-        cur.execute(user)
+        cur.execute(meetup)
         conn.commit()
 
     def meetup_data(self):
