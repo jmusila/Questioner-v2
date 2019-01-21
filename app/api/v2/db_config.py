@@ -25,15 +25,15 @@ except BaseException:
 
 cur = conn.cursor()
 
-
 def create_tables():
     """
     A fucntion to create all the tables
     """
     queries = tables()
-    for query in queries:
-        cur.execute(query)
+    for quey in queries:
+        cur.execute(quey)
     conn.commit()
+
 
 def drop_all():
     """
@@ -65,12 +65,14 @@ def tables():
 
     users = """
         CREATE TABLE IF NOT EXISTS users(id serial PRIMARY KEY,
-        fname varchar,
-        lname varchar,
+        firstname varchar,
+        lastname varchar,
         email varchar,
+        phoneNumber varchar,
+        username varchar,
         password varchar,
-        role boolean,
-        time_created timestamp);
+        isAdmin boolean,
+        time_created timestamp);       
         """
 
     tokens = """
@@ -90,7 +92,7 @@ def tables():
         CREATE TABLE IF NOT EXISTS meetups(id serial PRIMARY KEY,
         location varchar,
         images varchar,
-        topic varchar,
+        title varchar,
         tags varchar,
         happeningOn varchar,
         time_added timestamp);
@@ -113,7 +115,6 @@ def tables():
     queries = [questions, users, comments, meetups, responses, tokens, votes]
 
     return queries
-
 
 
 
