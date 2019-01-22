@@ -30,4 +30,3 @@ v2 = api.namespace(
 api.add_namespace(users_route, path = "/auth")
 api.add_namespace(meetup_route, path = "/meetups/upcoming")
 api.add_namespace(quiz_route, path = "/meetups")
-
