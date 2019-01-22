@@ -31,3 +31,5 @@ class Meetup:
                     tags = self.tags,
                     happeningOn = self.happeningOn,
                     time_added = self.time_added)
+
+                    
