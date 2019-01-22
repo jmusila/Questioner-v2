@@ -71,3 +71,5 @@ class MeetupDetails(Resource):
                     'tags': meetup[5],
                     'time_added':str(meetup[6])}
         return {"Status": 200, "Meetup": format_meetup}, 200
+
+        
