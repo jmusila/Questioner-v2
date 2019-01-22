@@ -29,7 +29,7 @@ class AddMeetup(Resource):
         mtup = create_mtup.meetup_data()
 
         return {'Status': 201, 'Message': "Meetup added successfully", 'Meetup': mtup}, 201
-        
+
     def get(self):
         """
         Get all meetups
@@ -50,5 +50,5 @@ class AddMeetup(Resource):
         if len(all_meetups) < 1:
             res= {"Status":404,"Message":"There are no meetups at the moment"},404
             return res
-        return {"Status": 200, "data": all_meetups}, 200
+        return {"Status": 200, "data": all_meetups}, 200 
 
