@@ -39,3 +39,4 @@ class AddQuestion(Resource):
         qsn = create_qsn.question_data()
 
         return {'Status': 201, 'Message': "Question posted successfully", 'Question': qsn}, 201
+        
