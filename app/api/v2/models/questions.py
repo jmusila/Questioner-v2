@@ -36,5 +36,3 @@ class Question:
                     title = self.title,
                     body = self.body,
                     time_added = self.time_added)
-
-        
