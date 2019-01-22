@@ -26,6 +26,7 @@ class UserLogin:
         'password': fields.String(required=True, description='The user password')
     })
 
+
 class MeetupModel:
     """
     Meetups input data
@@ -35,7 +36,7 @@ class MeetupModel:
     meetups = v2.model('Meetup', {
         'location': fields.String(required=True, description='This is the place of the meetup'),
         'images': fields.String(required=True, description='This is the image of the meetup'),
-        'topic': fields.String(required=True, description='The meetup topic'),
+        'title': fields.String(required=True, description='The meetup topic'),
         'happeningOn': fields.String(required=True, description='The time the meetup will happen'),
         'tags': fields.String(required=True, description='The meetup tags'),
     })
