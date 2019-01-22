@@ -7,7 +7,7 @@ from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_requir
 from app.api.v2.db_config import cur
 from app.api.v2.models.questions import Question
 from app.api.v2.views.expect import QuestionModel
-from .helpers import get_user_by_email
+from .helpers import get_user_by_email, get_question_by_id, get_meetup_by_id
 
 new_qsn = QuestionModel().questions
 v2 = QuestionModel().v2
@@ -23,8 +23,7 @@ class AddQuestion(Resource):
         if user:
         	user_id = user[0]
         votes = 0
-        cur.execute("SELECT * FROM meetups WHERE id='{}';".format(id))
-        mtup = cur.fetchone()
+        mtup = get_meetup_by_id(id)
         if not mtup or mtup[0] != id:
             msg = 'Meetup with that id does not exist'
             return {"Message":msg},404
