@@ -29,3 +29,6 @@ class AddMeetup(Resource):
         mtup = create_mtup.meetup_data()
 
         return {'Status': 201, 'Message': "Meetup added successfully", 'Meetup': mtup}, 201
+
+
+        
