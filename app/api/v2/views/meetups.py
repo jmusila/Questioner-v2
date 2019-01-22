@@ -85,3 +85,4 @@ class MeetupDetails(Resource):
         cur.execute("DELETE FROM meetups WHERE id={};".format(id))
         msg = 'Meetup deleted successfully!'
         return {'Message': msg}, 200
+        
