@@ -7,6 +7,7 @@ from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_requir
 from app.api.v2.db_config import cur
 from app.api.v2.models.meetups import Meetup
 from app.api.v2.views.expect import MeetupModel
+from .helpers import get_meetup_by_id
 
 new_meetup = MeetupModel().meetups
 v2 = MeetupModel().v2
@@ -58,8 +59,7 @@ class MeetupDetails(Resource):
         """
         Get a single meetup
         """
-        cur.execute("SELECT * FROM meetups WHERE id={};".format(id))
-        meetup = cur.fetchone()
+        meetup = get_meetup_by_id(id)
         if not meetup:
             msg = 'Meetup with that id does not exist'
             return {"Status":404, "Message":msg},404
@@ -71,3 +71,18 @@ class MeetupDetails(Resource):
                     'tags': meetup[5],
                     'time_added':str(meetup[6])}
         return {"Status": 200, "Meetup": format_meetup}, 200
+
+    @v2.doc(security='apikey')
+    @jwt_required
+    def delete(self, id):
+        """
+        Admin delete a meetup
+        """
+        meetup = get_meetup_by_id(id)
+        if not meetup:
+            msg = 'Meetup with that id does not exist'
+            return {"Status":404, "Message":msg},404
+        cur.execute("DELETE FROM meetups WHERE id={};".format(id))
+        msg = 'Meetup deleted successfully!'
+        return {'Message': msg}, 200
+        
