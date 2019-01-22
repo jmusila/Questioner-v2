@@ -52,4 +52,3 @@ class QuestionModel:
         'title': fields.String(required=True, description='This is the title of the question'),
         'body': fields.String(required=True, description='This is the body of the question'),
     })
-    
