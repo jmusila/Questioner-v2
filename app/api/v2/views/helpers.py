@@ -30,3 +30,4 @@ def get_meetup_by_id(id):
     cur.execute("SELECT * FROM meetups WHERE id='{}';".format(id))
     mtup = cur.fetchone()
     return mtup
+    
