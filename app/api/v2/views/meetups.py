@@ -52,3 +52,22 @@ class AddMeetup(Resource):
             return res
         return {"Status": 200, "data": all_meetups}, 200 
 
+@v2.route('/<int:id>')
+class MeetupDetails(Resource):
+    def get(self, id):
+        """
+        Get a single meetup
+        """
+        cur.execute("SELECT * FROM meetups WHERE id={};".format(id))
+        meetup = cur.fetchone()
+        if not meetup:
+            msg = 'Meetup with that id does not exist'
+            return {"Status":404, "Message":msg},404
+        format_meetup = {'meetup_id': meetup[0],
+                    'location': meetup[1],
+                    'images': meetup[2],
+                    'title': meetup[3],
+                    'happeningOn': meetup[4],
+                    'tags': meetup[5],
+                    'time_added':str(meetup[6])}
+        return {"Status": 200, "Meetup": format_meetup}, 200
