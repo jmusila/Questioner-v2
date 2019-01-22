@@ -29,6 +29,26 @@ class AddMeetup(Resource):
         mtup = create_mtup.meetup_data()
 
         return {'Status': 201, 'Message': "Meetup added successfully", 'Meetup': mtup}, 201
-
-
         
+    def get(self):
+        """
+        Get all meetups
+        """
+        cur.execute(
+            "SELECT * FROM meetups")
+        meetups = cur.fetchall()
+        all_meetups = []
+        for item in meetups:
+            format_meetup = {'meetup_id': item[0],
+                        'location': item[1],
+                        'images': item[2],
+                        'title': item[3],
+                        'happeningOn': item[4],
+                        'tags': item[5],
+                        'time_added':str(item[6])}
+            all_meetups.append(format_meetup)
+        if len(all_meetups) < 1:
+            res= {"Status":404,"Message":"There are no meetups at the moment"},404
+            return res
+        return {"Status": 200, "data": all_meetups}, 200
+
