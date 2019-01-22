@@ -59,8 +59,7 @@ class MeetupDetails(Resource):
         """
         Get a single meetup
         """
-        cur.execute("SELECT * FROM meetups WHERE id={};".format(id))
-        meetup = cur.fetchone()
+        meetup = get_meetup_by_id(id)
         if not meetup:
             msg = 'Meetup with that id does not exist'
             return {"Status":404, "Message":msg},404
@@ -79,8 +78,7 @@ class MeetupDetails(Resource):
         """
         Admin delete a meetup
         """
-        cur.execute("SELECT * FROM meetups WHERE id={};".format(id))
-        meetup = cur.fetchone()
+        meetup = get_meetup_by_id(id)
         if not meetup:
             msg = 'Meetup with that id does not exist'
             return {"Status":404, "Message":msg},404
