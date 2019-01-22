@@ -40,3 +40,15 @@ class MeetupModel:
         'happeningOn': fields.String(required=True, description='The time the meetup will happen'),
         'tags': fields.String(required=True, description='The meetup tags'),
     })
+
+
+class QuestionModel:
+    """
+    Meetups input data
+
+    """
+    v2 = Namespace('Questions', description = 'Questions Routes')
+    questions = v2.model('Question', {
+        'title': fields.String(required=True, description='This is the title of the question'),
+        'body': fields.String(required=True, description='This is the body of the question'),
+    })
