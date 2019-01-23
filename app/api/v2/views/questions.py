@@ -7,6 +7,7 @@ from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_requir
 from app.api.v2.db_config import cur, conn
 from app.api.v2.models.questions import Question
 from app.api.v2.views.expect import QuestionModel
+from app.api.common.validators import question_validator
 from .helpers import get_user_by_email, get_question_by_id, get_meetup_by_id
 
 new_qsn = QuestionModel().questions
