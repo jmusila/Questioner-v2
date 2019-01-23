@@ -27,3 +27,4 @@ class Comment:
                     question_id = self.question_id,
                     comment = self.comment,
                     time_added = self.time_added)
+                    
