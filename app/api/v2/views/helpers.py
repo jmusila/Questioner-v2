@@ -30,4 +30,11 @@ def get_meetup_by_id(id):
     cur.execute("SELECT * FROM meetups WHERE id='{}';".format(id))
     mtup = cur.fetchone()
     return mtup
+
+def votes_count(user_id, question_id, votes):
+    p_votes = """ INSERT INTO votes (user_id, question_id, votes) 
+    VALUES ('{}','{}','{}') """\
+    .format(user_id, question_id, votes)
+    cur.execute(p_votes)
+    conn.commit()
     
