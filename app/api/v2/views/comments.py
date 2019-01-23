@@ -38,3 +38,4 @@ class AddComment(Resource):
 
             return {'Status': 201, 'Message': "Comment posted successfully", 'Comment': cmnt}, 201
         return comment_validator(data)
+        
