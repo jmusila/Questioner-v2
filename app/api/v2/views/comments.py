@@ -20,19 +20,21 @@ class AddComment(Resource):
     @jwt_required
     def post(self, id):
         '''Add a new comment'''
-        user = get_user_by_email(get_jwt_identity())
-        if user:
-        	user_id = user[0]
-        qsn = get_question_by_id(id)
-        if not qsn or qsn[0] != id:
-            msg = 'Question with that id does not exist'
-            return {"Message":msg},404
-        question_id = qsn[0]
         data = request.get_json()
-        create_comment = Comment(user_id, 
-        				question_id,
-						data['comment'])
-        create_comment.add_comment()
-        cmnt = create_comment.comment_data()
+        if not comment_validator(data):
+            user = get_user_by_email(get_jwt_identity())
+            if user:
+                user_id = user[0]
+            qsn = get_question_by_id(id)
+            if not qsn or qsn[0] != id:
+                msg = 'Question with that id does not exist'
+                return {"Message":msg},404
+            question_id = qsn[0]
+            create_comment = Comment(user_id, 
+                            question_id,
+                            data['comment'])
+            create_comment.add_comment()
+            cmnt = create_comment.comment_data()
 
-        return {'Status': 201, 'Message': "Comment posted successfully", 'Comment': cmnt}, 201
+            return {'Status': 201, 'Message': "Comment posted successfully", 'Comment': cmnt}, 201
+        return comment_validator(data)
