@@ -9,6 +9,7 @@ from app.api.v2.models.meetups import Meetup
 from app.api.v2.views.expect import MeetupModel
 from .helpers import get_meetup_by_id
 from app.api.common.validators import new_meetup_validator
+from .helpers import get_user_by_email
 
 new_meetup = MeetupModel().meetups
 v2 = MeetupModel().v2
@@ -21,6 +22,10 @@ class AddMeetup(Resource):
     @jwt_required
     def post(self):
         '''Add a new meetup'''
+        user = get_user_by_email(get_jwt_identity())
+        if user[7] != True:
+            msg ='Access denied! Please contact the admin'
+            return {'Message': msg}, 401
         data = request.get_json()
         if not new_meetup_validator(data):
             create_mtup = Meetup(data['location'],
@@ -80,6 +85,10 @@ class MeetupDetails(Resource):
         """
         Admin delete a meetup
         """
+        user = get_user_by_email(get_jwt_identity())
+        if user[7] != True:
+            msg ='Access denied! Please contact the admin'
+            return {'Message': msg}, 401
         meetup = get_meetup_by_id(id)
         if not meetup:
             msg = 'Meetup with that id does not exist'

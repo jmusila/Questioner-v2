@@ -1,6 +1,8 @@
 """
 This file contains the database configurations and its common operations
 """
+from werkzeug.security import generate_password_hash
+from datetime import datetime
 
 # Standard library imports
 import os 
@@ -34,6 +36,24 @@ def create_tables():
         cur.execute(quey)
     conn.commit()
 
+def create_admin():
+    firstname = 'admin'
+    lastname = 'super'
+    email = 'admin@super.com'
+    phoneNumber = '07989898999'
+    username = 'Asuper'
+    password = generate_password_hash('isAdmin')
+    isAdmin = 'True'
+    time_created = datetime.now()
+
+    cur.execute("SELECT * FROM users WHERE email='{}';".format(email))
+    user = cur.fetchone()
+    if not user:
+        user = """ INSERT INTO users (firstname, lastname, email, phoneNumber, username, password, isAdmin, time_created) 
+        VALUES ('{}','{}','{}','{}','{}', '{}' , '{}' , '{}') """\
+        .format(firstname, lastname, email, phoneNumber, username, password, isAdmin, time_created)
+        cur.execute(user)
+        conn.commit() 
 
 def drop_all():
     """
@@ -98,13 +118,6 @@ def tables():
         time_added timestamp);
         """
 
-    responses = """
-        CREATE TABLE IF NOT EXISTS responses(id serial PRIMARY KEY,
-        meetup_id int,
-        user_id int,
-        response varchar);
-        """
-
     votes = """
         CREATE TABLE IF NOT EXISTS votes(id serial PRIMARY KEY,
         question_id int,
@@ -112,7 +125,7 @@ def tables():
         votes int);
         """
 
-    queries = [questions, users, comments, meetups, responses, tokens, votes]
+    queries = [questions, users, comments, meetups, tokens, votes]
 
     return queries
 
