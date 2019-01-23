@@ -8,7 +8,7 @@ from app.api.v2.db_config import cur, conn
 from app.api.v2.models.questions import Question
 from app.api.v2.views.expect import QuestionModel
 from app.api.common.validators import question_validator
-from .helpers import get_user_by_email, get_question_by_id, get_meetup_by_id
+from .helpers import get_user_by_email, get_question_by_id, get_meetup_by_id, votes_count
 
 new_qsn = QuestionModel().questions
 v2 = QuestionModel().v2
