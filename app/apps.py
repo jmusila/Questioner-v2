@@ -39,3 +39,4 @@ def create_app(config_name):
     jwt._set_error_handler_callbacks(jwtapp)
 
     return app
+    
