@@ -9,6 +9,7 @@ from app.api.v2.models.meetups import Meetup
 from app.api.v2.views.expect import MeetupModel
 from .helpers import get_meetup_by_id
 from app.api.common.validators import new_meetup_validator
+from .helpers import get_user_by_email
 
 new_meetup = MeetupModel().meetups
 v2 = MeetupModel().v2
