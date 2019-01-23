@@ -19,25 +19,27 @@ class AddQuestion(Resource):
     @jwt_required
     def post(self, id):
         '''Add a new question'''
-        user = get_user_by_email(get_jwt_identity())
-        if user:
-        	user_id = user[0]
-        votes = 0
-        mtup = get_meetup_by_id(id)
-        if not mtup or mtup[0] != id:
-            msg = 'Meetup with that id does not exist'
-            return {"Message":msg},404
-        meetup_id = mtup[0]
         data = request.get_json()
-        create_qsn = Question(user_id, 
-        				meetup_id,
-        				votes,
-						data['title'],
-						data['body'])
-        create_qsn.add_question()
-        qsn = create_qsn.question_data()
+        if not question_validator(data):
+            user = get_user_by_email(get_jwt_identity())
+            if user:
+                user_id = user[0]
+                votes = 0
+            mtup = get_meetup_by_id(id)
+            if not mtup or mtup[0] != id:
+                msg = 'Meetup with that id does not exist'
+                return {"Message":msg},404
+            meetup_id = mtup[0]
+            create_qsn = Question(user_id, 
+            meetup_id,
+            votes,
+			data['title'],
+			data['body'])
+            create_qsn.add_question()
+            qsn = create_qsn.question_data()
 
-        return {'Status': 201, 'Message': "Question posted successfully", 'Question': qsn}, 201
+            return {'Status': 201, 'Message': "Question posted successfully", 'Question': qsn}, 201
+        return question_validator(data)
 
 @v2.route('/questions/<int:id>/upvote')
 class UpVoteQuestion(Resource):
