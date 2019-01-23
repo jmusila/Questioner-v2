@@ -21,6 +21,10 @@ class AddMeetup(Resource):
     @jwt_required
     def post(self):
         '''Add a new meetup'''
+        user = get_user_by_email(get_jwt_identity())
+        if user[7] != True:
+            msg ='Access denied! Please contact the admin'
+            return {'Message': msg}, 401
         data = request.get_json()
         if not new_meetup_validator(data):
             create_mtup = Meetup(data['location'],
