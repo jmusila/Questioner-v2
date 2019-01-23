@@ -34,6 +34,24 @@ def create_tables():
         cur.execute(quey)
     conn.commit()
 
+def create_admin():
+    firstname = 'admin'
+    lastname = 'super'
+    email = 'admin@super.com'
+    phoneNumber = '07989898999'
+    username = 'Asuper'
+    password = generate_password_hash('isAdmin')
+    isAdmin = 'True'
+    time_created = datetime.now()
+
+    cur.execute("SELECT * FROM users WHERE email='{}';".format(email))
+    user = cur.fetchone()
+    if not user:
+        user = """ INSERT INTO users (firstname, lastname, email, phoneNumber, username, password, isAdmin, time_created) 
+        VALUES ('{}','{}','{}','{}','{}', '{}' , '{}' , '{}') """\
+        .format(firstname, lastname, email, phoneNumber, username, password, isAdmin, time_created)
+        cur.execute(user)
+        conn.commit() 
 
 def drop_all():
     """
