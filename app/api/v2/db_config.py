@@ -1,6 +1,8 @@
 """
 This file contains the database configurations and its common operations
 """
+from werkzeug.security import generate_password_hash
+from datetime import datetime
 
 # Standard library imports
 import os 
