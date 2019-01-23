@@ -82,11 +82,10 @@ class DownvoteQuestion(Resource):
             return {"Message":msg},404
         question_id = qsn[0]
         votes = qsn[3] -1
-        p_votes = """ INSERT INTO votes (user_id, question_id, votes) 
-        VALUES ('{}','{}','{}') """\
-        .format(user_id, question_id, votes)
-        cur.execute(p_votes)
+        cur.execute("UPDATE questions SET votes = '{}'\
+        WHERE id={};".format(votes ,id))
         conn.commit()
+        votes_count(user_id, question_id, votes)
         msg = 'You have disliked this question'
-        return {'Message': msg}, 200
+        return {'Status':201, 'Votes':votes, 'Message':msg}
         
