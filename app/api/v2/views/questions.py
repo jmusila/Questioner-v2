@@ -61,5 +61,5 @@ class UpVoteQuestion(Resource):
         cur.execute(p_votes)
         conn.commit()
         msg = 'You have liked this question'
-        return {'Message': msg}, 200
+        return {'Message': msg}, 200 
         
