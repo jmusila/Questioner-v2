@@ -52,3 +52,14 @@ class QuestionModel:
         'title': fields.String(required=True, description='This is the title of the question'),
         'body': fields.String(required=True, description='This is the body of the question'),
     })
+
+class CommentModel:
+    """
+    Comment input data
+
+    """
+    v2 = Namespace('Comments', description = 'Comments Routes')
+    comments = v2.model('Comment', {
+        'comment': fields.String(required=True, description='This is the comments body'),
+    })
+    
