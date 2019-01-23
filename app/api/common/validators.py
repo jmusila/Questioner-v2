@@ -62,3 +62,24 @@ def new_user_validator(data):
             if item == 'phoneNumber':
                 res = valid_phone_number(value)
     return res
+
+def new_meetup_validator(data):
+
+    expected_pay_load = ['location', 'happeningOn', 'images', 'tags', 'title' ]
+    res = common(expected_pay_load, data)
+
+    return res
+
+
+def question_validator(data):
+    expected_pay_load = ['title', 'body']
+    res = common(expected_pay_load, data)
+
+    return res
+
+def comment_validator(data):
+    expected_pay_load = ['comment']
+    res = common(expected_pay_load, data)
+
+    return res
+    
