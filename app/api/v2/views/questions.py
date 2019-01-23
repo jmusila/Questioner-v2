@@ -51,20 +51,20 @@ class UpVoteQuestion(Resource):
         ''' Up votes '''
         user = get_user_by_email(get_jwt_identity())
         if user:
-        	user_id = user[0]
+            user_id = user[0]
         qsn = get_question_by_id(id)
         if not qsn or qsn[0] != id:
             msg = 'Question with that id does not exist'
             return {"Message":msg},404
         question_id = qsn[0]
         votes = qsn[3] +1
-        p_votes = """ INSERT INTO votes (user_id, question_id, votes) 
-        VALUES ('{}','{}','{}') """\
-        .format(user_id, question_id, votes)
-        cur.execute(p_votes)
+        cur.execute("UPDATE questions SET votes = '{}'\
+        WHERE id={};".format(votes ,id))
         conn.commit()
+        votes_count(user_id, question_id, votes)
         msg = 'You have liked this question'
-        return {'Message': msg}, 200 
+        return {'Status':201, 'Votes':votes, 'Message':msg}
+
 
 @v2.route('/questions/<int:id>/downvote')
 class DownvoteQuestion(Resource):
