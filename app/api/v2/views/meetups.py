@@ -85,6 +85,10 @@ class MeetupDetails(Resource):
         """
         Admin delete a meetup
         """
+        user = get_user_by_email(get_jwt_identity())
+        if user[7] != True:
+            msg ='Access denied! Please contact the admin'
+            return {'Message': msg}, 401
         meetup = get_meetup_by_id(id)
         if not meetup:
             msg = 'Meetup with that id does not exist'
