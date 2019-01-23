@@ -125,7 +125,7 @@ def tables():
         votes int);
         """
 
-    queries = [questions, users, comments, meetups, responses, tokens, votes]
+    queries = [questions, users, comments, meetups, tokens, votes]
 
     return queries
 
