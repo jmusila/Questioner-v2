@@ -21,15 +21,16 @@ class AddMeetup(Resource):
     def post(self):
         '''Add a new meetup'''
         data = request.get_json()
-        create_mtup = Meetup(data['location'],
-						data['images'],
-						data['title'],
-						data['happeningOn'],
-						data['tags'])
-        create_mtup.add_new_meetup()
-        mtup = create_mtup.meetup_data()
-
-        return {'Status': 201, 'Message': "Meetup added successfully", 'Meetup': mtup}, 201
+        if not new_meetup_validator(data):
+            create_mtup = Meetup(data['location'],
+        					data['images'],
+        					data['title'],
+        					data['happeningOn'],
+        					data['tags'])
+            create_mtup.add_new_meetup()
+            mtup = create_mtup.meetup_data()
+            return {'Status': 201, 'Message': "Meetup added successfully", 'Meetup': mtup}, 201
+        return new_meetup_validator(data)
 
     def get(self):
         """
