@@ -118,13 +118,6 @@ def tables():
         time_added timestamp);
         """
 
-    responses = """
-        CREATE TABLE IF NOT EXISTS responses(id serial PRIMARY KEY,
-        meetup_id int,
-        user_id int,
-        response varchar);
-        """
-
     votes = """
         CREATE TABLE IF NOT EXISTS votes(id serial PRIMARY KEY,
         question_id int,
