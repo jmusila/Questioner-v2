@@ -48,4 +48,4 @@ class TestComment(Settings):
                             content_type='application/json')
         res1 = json.loads(res.data.decode())
         self.assertEqual(res1['Message'], "Comment posted successfully")
-        self.assertEqual(res.status_code, 201)
+        self.assertEqual(res.status_code, 201)  
