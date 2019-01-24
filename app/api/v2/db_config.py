@@ -80,9 +80,7 @@ def tables():
         votes int,
         title varchar,
         body varchar,
-        time_added timestamp,
-        FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
-        FOREIGN KEY (meetup_id) REFERENCES meetups(id) ON DELETE CASCADE);
+        time_added timestamp);
         """
                     
 
@@ -108,8 +106,7 @@ def tables():
         user_id int,
         question_id int,
         comment varchar,
-        time_added timestamp,
-        FOREIGN KEY (question_id) REFERENCES questions(id) ON DELETE CASCADE);
+        time_added timestamp);
         """
 
     meetups = """
