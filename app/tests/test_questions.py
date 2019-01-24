@@ -5,7 +5,6 @@ from .base_test import Settings
 
 question_url = "api/v2/meetups/1/questions"
 meetups_url = "api/v2/meetups/upcoming"
-upvote_url = "api/v2/questions/1/comments"
 
 class TestUser(Settings):
     quiz =   {
@@ -72,7 +71,7 @@ class TestUser(Settings):
                             headers=dict(Authorization="Bearer " + token),
                             content_type='application/json')
         res1 = json.loads(res.data.decode())
-        res = self.app.patch(upvote_url,
+        res = self.app.patch('api/v2/meetups/questions/1/upvote',
                             data=json.dumps(self.upvote),
                             headers=dict(Authorization="Bearer " + token),
                             content_type='application/json')
