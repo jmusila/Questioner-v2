@@ -3,6 +3,8 @@ import json
 #local imports
 from .base_test import Settings
 
+meetups_url = "api/v2/meetups/upcoming"
+
 class TestMeetup(Settings):
     meetup =   {
             "location": "PAC",
@@ -17,7 +19,7 @@ class TestMeetup(Settings):
         Test post a meetup
         """
         token = self.give_token()
-        res = self.app.post("api/v2/meetups/upcoming",
+        res = self.app.post(meetups_url,
                             data=json.dumps(self.meetup),
                             headers=dict(Authorization="Bearer " + token),
                             content_type='application/json')
@@ -29,7 +31,7 @@ class TestMeetup(Settings):
     def test_get_single_meetup(self):
         """Test API can get a single meetup by using it's id."""
         token = self.give_token()
-        res = self.app.post("api/v2/meetups/upcoming",
+        res = self.app.post(meetups_url,
                             data=json.dumps(self.meetup),
                             headers=dict(Authorization="Bearer " + token),
                             content_type='application/json')
@@ -42,7 +44,7 @@ class TestMeetup(Settings):
 
     def test_get_all_meetups(self):
         token = self.give_token()
-        res = self.app.post("api/v2/meetups/upcoming",
+        res = self.app.post(meetups_url,
                             data=json.dumps(self.meetup),
                             headers=dict(Authorization="Bearer " + token),
                             content_type='application/json')
