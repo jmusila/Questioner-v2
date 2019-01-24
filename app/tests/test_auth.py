@@ -4,6 +4,9 @@ import json
 #local imports
 from .base_test import Settings
 
+login_url = "/api/v2/auth/login"
+signup_url = "/api/v2/auth/signup"
+
 class TestUser(Settings):
     register ={
           "lastname": "musila",
@@ -38,15 +41,15 @@ class TestUser(Settings):
         """
         Test register a user
         """
-        res = self.app.post('api/v2/auth/signup', data=json.dumps(self.register), content_type='application/json')
+        res = self.app.post(signup_url, data=json.dumps(self.register), content_type='application/json')
         res1 = json.loads(res.data.decode())
         self.assertEqual(res1['Message'], 'User registered successfully')
         self.assertEqual(res.status_code, 201)
 
     def test_login(self):
         """Test user login."""
-        self.app.post('api/v2/auth/signup', data=json.dumps(self.register), content_type='application/json')
-        res = self.app.post('api/v2/auth/login', data=json.dumps(self.login), content_type='application/json')
+        self.app.post(signup_url, data=json.dumps(self.register), content_type='application/json')
+        res = self.app.post(login_url, data=json.dumps(self.login), content_type='application/json')
         res1 = json.loads(res.data.decode())
         self.assertEqual(res.status_code, 200)
 
@@ -55,8 +58,8 @@ class TestUser(Settings):
         """
         Test signup twice
         """
-        self.app.post('api/v2/auth/signup', data=json.dumps(self.register), content_type='application/json')
-        res = self.app.post('api/v2/auth/signup', data=json.dumps(self.register), content_type='application/json')
+        self.app.post(signup_url, data=json.dumps(self.register), content_type='application/json')
+        res = self.app.post(signup_url, data=json.dumps(self.register), content_type='application/json')
         res1 = json.loads(res.data.decode())
         self.assertEqual(res1['Message'], 'Email already exists!')
         self.assertEqual(res.status_code, 409)
@@ -65,8 +68,8 @@ class TestUser(Settings):
         """
         Test signup twice
         """
-        self.app.post('api/v2/auth/signup', data=json.dumps(self.register), content_type='application/json')
-        res = self.app.post('api/v2/auth/signup', data=json.dumps(self.registered), content_type='application/json')
+        self.app.post(signup_url, data=json.dumps(self.register), content_type='application/json')
+        res = self.app.post(signup_url, data=json.dumps(self.registered), content_type='application/json')
         res1 = json.loads(res.data.decode())
         self.assertEqual(res1['Message'], 'Username already exists!')
         self.assertEqual(res.status_code, 409)
