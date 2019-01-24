@@ -3,6 +3,10 @@ import json
 #local imports
 from .base_test import Settings
 
+question_url = "api/v2/meetups/1/questions"
+meetups_url = "api/v2/meetups/upcoming"
+comments_url = "api/v2/questions/1/comments"
+
 class TestComment(Settings):
     comment =   {
             "comment": "This is my comment",
@@ -27,22 +31,21 @@ class TestComment(Settings):
         Test post a comment
         """
         token = self.give_token()
-        res = self.app.post("api/v2/meetups/upcoming",
+        res = self.app.post(meetups_url,
                             data=json.dumps(self.meetup),
                             headers=dict(Authorization="Bearer " + token),
                             content_type='application/json')
         res1 = json.loads(res.data.decode())
         token = self.give_token()
-        res = self.app.post("api/v2/meetups/1/questions",
+        res = self.app.post(question_url,
                             data=json.dumps(self.meetup),
                             headers=dict(Authorization="Bearer " + token),
                             content_type='application/json')
         res1 = json.loads(res.data.decode())
-        res = self.app.post("api/v2/questions/1/comments",
+        res = self.app.post(comments_url,
                             data=json.dumps(self.comment),
                             headers=dict(Authorization="Bearer " + token),
                             content_type='application/json')
         res1 = json.loads(res.data.decode())
         self.assertEqual(res1['Message'], "Comment posted successfully")
         self.assertEqual(res.status_code, 201)
-        
