@@ -34,4 +34,3 @@ class Settings(unittest.TestCase):
 		login = self.app.post(login_url, data=json.dumps(self.login_data), content_type='application/json')	
 		login_data = json.loads(login.data.decode())
 		return login_data["access_token"]
-        
