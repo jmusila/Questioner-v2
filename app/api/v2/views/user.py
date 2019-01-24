@@ -63,7 +63,9 @@ class Login(Resource):
             msg = 'The password field can not be empty'
             return {"Status":400, "Message":msg},400
         current_user = get_user_by_email(email)
-        if not current_user or not check_password_hash(current_user[6], password):
+        if not current_user: 
             return {'Message': 'User {} does not exist'.format(data['email'])}, 400
+        if not check_password_hash(current_user[6], password):
+            return {'Message': "The password is incorrect"}, 400
         access_token = create_access_token(identity = data['email'])
         return {"Status": 200, "access_token": access_token}, 200
