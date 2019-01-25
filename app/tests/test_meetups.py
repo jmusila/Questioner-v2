@@ -55,7 +55,7 @@ class TestMeetup(Settings):
         self.assertEqual(res1.status_code, 200)
         self.assertIn('Python', str(res1.data))
 
-    def test_delete_meetup(self):
+    def test_xdelete_meetup(self):
         token = self.give_token()
         res = self.app.post(meetups_url,
                             data=json.dumps(self.meetup),
