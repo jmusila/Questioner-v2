@@ -9,7 +9,7 @@ from app.api.v2.models.meetups import Meetup
 from app.api.v2.views.expect import MeetupModel
 from .helpers import get_meetup_by_id
 from app.api.common.validators import new_meetup_validator
-from .helpers import get_user_by_email
+from .helpers import get_user_by_email, check_meetup_exists
 
 new_meetup = MeetupModel().meetups
 v2 = MeetupModel().v2
@@ -27,6 +27,9 @@ class AddMeetup(Resource):
             msg ='Access denied! Please contact the admin'
             return {'Message': msg}, 401
         data = request.get_json()
+        check_exists = check_meetup_exists(data['title'], data['happeningOn'], data['location'])
+        if check_exists:
+                return {'Status': 409, 'Message':"Meetup already exists!"},409
         if not new_meetup_validator(data):
             create_mtup = Meetup(data['location'],
         					data['images'],
