@@ -44,7 +44,6 @@ class AddQuestion(Resource):
 
 @v2.route('/questions/<int:id>/upvote')
 class UpVoteQuestion(Resource):
-    @v2.expect(new_qsn, validate = True)
     @v2.doc(security='apikey')
     @jwt_required
     def patch(self, id):
@@ -68,7 +67,6 @@ class UpVoteQuestion(Resource):
 
 @v2.route('/questions/<int:id>/downvote')
 class DownvoteQuestion(Resource):
-    @v2.expect(new_qsn, validate = True)
     @v2.doc(security='apikey')
     @jwt_required
     def patch(self, id):

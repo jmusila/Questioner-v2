@@ -82,6 +82,7 @@ def tables():
         body varchar,
         time_added timestamp);
         """
+                    
 
     users = """
         CREATE TABLE IF NOT EXISTS users(id serial PRIMARY KEY,

@@ -37,4 +37,17 @@ def votes_count(user_id, question_id, votes):
     .format(user_id, question_id, votes)
     cur.execute(p_votes)
     conn.commit()
+
+def check_meetup_exists(location, happeningOn, title):
+    cur.execute("SELECT * FROM meetups WHERE location='{}';".format(location))
+    meetup = cur.fetchone()
+    return meetup
+
+    cur.execute("SELECT * FROM meetups WHERE happeningOn='{}';".format(happeningOn))
+    meet = cur.fetchone()
+    return meet
+
+    cur.execute("SELECT * FROM meetups WHERE title='{}';".format(title))
+    ups = cur.fetchone()
+    return ups
     

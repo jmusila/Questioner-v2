@@ -9,7 +9,7 @@ from app.api.v2.models.meetups import Meetup
 from app.api.v2.views.expect import MeetupModel
 from .helpers import get_meetup_by_id
 from app.api.common.validators import new_meetup_validator
-from .helpers import get_user_by_email
+from .helpers import get_user_by_email, check_meetup_exists
 
 new_meetup = MeetupModel().meetups
 v2 = MeetupModel().v2
@@ -27,6 +27,9 @@ class AddMeetup(Resource):
             msg ='Access denied! Please contact the admin'
             return {'Message': msg}, 401
         data = request.get_json()
+        check_exists = check_meetup_exists(data['title'], data['happeningOn'], data['location'])
+        if check_exists:
+                return {'status': 409, 'message':"meetup already exists!"},409
         if not new_meetup_validator(data):
             create_mtup = Meetup(data['location'],
         					data['images'],
@@ -35,7 +38,7 @@ class AddMeetup(Resource):
         					data['tags'])
             create_mtup.add_new_meetup()
             mtup = create_mtup.meetup_data()
-            return {'Status': 201, 'Message': "Meetup added successfully", 'Meetup': mtup}, 201
+            return {'status': 201, 'message': "meetup added successfully", 'Meetup': mtup}, 201
         return new_meetup_validator(data)
 
     def get(self):
@@ -56,9 +59,9 @@ class AddMeetup(Resource):
                         'time_added':str(item[6])}
             all_meetups.append(format_meetup)
         if len(all_meetups) < 1:
-            res= {"Status":404,"Message":"There are no meetups at the moment"},404
+            res= {"status":404,"message":"mhere are no meetups at the moment"},404
             return res
-        return {"Status": 200, "data": all_meetups}, 200 
+        return {"status": 200, "data": all_meetups}, 200 
 
 @v2.route('/<int:id>')
 class MeetupDetails(Resource):
@@ -68,7 +71,7 @@ class MeetupDetails(Resource):
         """
         meetup = get_meetup_by_id(id)
         if not meetup:
-            msg = 'Meetup with that id does not exist'
+            msg = 'meetup with that id does not exist'
             return {"Status":404, "Message":msg},404
         format_meetup = {'meetup_id': meetup[0],
                     'location': meetup[1],
@@ -77,7 +80,7 @@ class MeetupDetails(Resource):
                     'happeningOn': meetup[4],
                     'tags': meetup[5],
                     'time_added':str(meetup[6])}
-        return {"Status": 200, "Meetup": format_meetup}, 200
+        return {"status": 200, "meetup": format_meetup}, 200
 
     @v2.doc(security='apikey')
     @jwt_required
@@ -87,13 +90,13 @@ class MeetupDetails(Resource):
         """
         user = get_user_by_email(get_jwt_identity())
         if user[7] != True:
-            msg ='Access denied! Please contact the admin'
-            return {'Message': msg}, 401
+            msg ='access denied! please contact the admin'
+            return {'message': msg}, 401
         meetup = get_meetup_by_id(id)
         if not meetup:
-            msg = 'Meetup with that id does not exist'
-            return {"Status":404, "Message":msg},404
+            msg = 'meetup with that id does not exist'
+            return {"status":404, "message":msg},404
         cur.execute("DELETE FROM meetups WHERE id={};".format(id))
-        msg = 'Meetup deleted successfully!'
-        return {'Message': msg}, 200
+        msg = 'meetup deleted successfully!'
+        return {'message': msg}, 200
         
