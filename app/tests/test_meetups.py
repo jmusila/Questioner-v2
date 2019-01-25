@@ -24,7 +24,7 @@ class TestMeetup(Settings):
                             headers=dict(Authorization="Bearer " + token),
                             content_type='application/json')
         res1 = json.loads(res.data.decode())
-        self.assertEqual(res1['Message'], 'Meetup added successfully')
+        self.assertEqual(res1['message'], 'meetup added successfully')
         self.assertEqual(res.status_code, 201)
 
 
