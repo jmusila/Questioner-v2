@@ -41,6 +41,12 @@ def valid_phone_number(phoneNumber):
         msg = 'Please enter a valid phone number'
         return {'Status':406,"Message":msg},406
 
+def valid_fname(firstname):
+    if not \
+    re.match(r"^[A-Za-z][a-zA-Z]", firstname):
+        msg = 'Please enter alpahbetical characters only'
+        return {'Status':406,"Message":msg},406
+
 def new_user_validator(data):
     """
     Validate a new user inputs
@@ -61,6 +67,8 @@ def new_user_validator(data):
                 res = valid_email(value)
             if item == 'phoneNumber':
                 res = valid_phone_number(value)
+            if item == 'firtsname':
+                res = valid_fname(value)
     return res
 
 def new_meetup_validator(data):

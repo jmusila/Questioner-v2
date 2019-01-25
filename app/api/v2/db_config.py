@@ -76,7 +76,7 @@ def tables():
     questions = """
         CREATE TABLE IF NOT EXISTS questions(id serial PRIMARY KEY,
         user_id int,
-        meetup_id int,
+        meetup_id int REFERENCES meetups(id) ON DELETE CASCADE,
         votes int,
         title varchar,
         body varchar,
@@ -104,7 +104,7 @@ def tables():
     comments = """
         CREATE TABLE IF NOT EXISTS comments(id serial PRIMARY KEY,
         user_id int,
-        question_id int,
+        question_id int REFERENCES questions(id) ON DELETE CASCADE,
         comment varchar,
         time_added timestamp);
         """
