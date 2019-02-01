@@ -10,6 +10,7 @@ from datetime import timedelta
 # Third party imports
 from flask import Flask
 from flask_jwt_extended import JWTManager
+from flask_cors import CORS
 
 # Local imports
 from .api.v2.db_config import create_tables, drop_all, create_admin
@@ -31,6 +32,9 @@ def create_app(config_name):
     app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(hours=2)
     app.config['JWT_BLACKLIST_TOKEN_CHECKS'] = ['access']
     jwt.init_app(app)
+    CORS(app)  
+
+
     cur = conn.cursor()
 
     from .api.v2.routes import version2 as v_2
