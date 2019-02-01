@@ -32,7 +32,7 @@ def create_app(config_name):
     app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(hours=2)
     app.config['JWT_BLACKLIST_TOKEN_CHECKS'] = ['access']
     jwt.init_app(app)
-    CORS(app)
+    CORS(app)  
 
 
     cur = conn.cursor()
