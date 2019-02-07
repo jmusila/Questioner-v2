@@ -40,7 +40,7 @@ class SignUp(Resource):
 							data['password'],
 							isAdmin)
             if len(data['password']) < 6:
-                return {'message': 'Password should be at least 6 characters'}, 400
+                return {"Status":400, 'Message': 'Password should be at least 6 characters'}, 400
             create_user.add_new_user()
             user = create_user.user_data()
 
@@ -64,8 +64,8 @@ class Login(Resource):
             return {"Status":400, "Message":msg},400
         current_user = get_user_by_email(email)
         if not current_user: 
-            return {'Message': 'User {} does not exist'.format(data['email'])}, 400
+            return {"Status":400, 'Message': 'User {} does not exist'.format(data['email'])}, 400
         if not check_password_hash(current_user[6], password):
-            return {'Message': "The password is incorrect"}, 400
+            return {"Status":400, 'Message': "The password is incorrect"}, 400
         access_token = create_access_token(identity = data['email'])
         return {"Status": 200, "access_token": access_token}, 200
