@@ -59,7 +59,7 @@ class AddMeetup(Resource):
                         'time_added':str(item[6])}
             all_meetups.append(format_meetup)
         if len(all_meetups) < 1:
-            res= {"status":404,"message":"mhere are no meetups at the moment"},404
+            res= {"status":404,"message":"There are no meetups at the moment"},404
             return res
         return {"status": 200, "data": all_meetups}, 200 
 
