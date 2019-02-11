@@ -98,5 +98,5 @@ class MeetupDetails(Resource):
             return {"status":404, "message":msg},404
         cur.execute("DELETE FROM meetups WHERE id={};".format(id))
         msg = 'meetup deleted successfully!'
-        return {'message': msg}, 200
+        return {"status":200, 'message': msg}, 200
         
