@@ -66,7 +66,7 @@ class AddQuestion(Resource):
         if len(all_questions) < 1:
             res= {"Status":404,"Message":"There are no Questions at the moment"},404
             return res
-        return {"Status": 200, "data": all_questions}, 200
+        return {"Status": 200, "data": all_questions}, 200 
 
 @v2.route('/questions/<int:id>/upvote')
 class UpVoteQuestion(Resource):
