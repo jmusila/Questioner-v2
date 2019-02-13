@@ -49,3 +49,16 @@ class TestComment(Settings):
         res1 = json.loads(res.data.decode())
         self.assertEqual(res1['Message'], "Comment posted successfully")
         self.assertEqual(res.status_code, 201)  
+
+    def test_get_all_comments(self):
+        token = self.give_token()
+        res = self.app.post(comments_url,
+                            data=json.dumps(self.comment),
+                            headers=dict(Authorization="Bearer " + token),
+                            content_type='application/json')
+        res1 = json.loads(res.data.decode())
+        self.assertEqual(res.status_code, 201)
+        res1 = self.app.get('api/v2/questions/1/comments')
+        data = json.loads(res1.get_data().decode())
+        self.assertEqual(res1.status_code, 200)
+        self.assertIn('This is my comment', str(res1.data))
