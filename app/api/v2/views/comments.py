@@ -24,7 +24,7 @@ class AddComment(Resource):
         if not comment_validator(data):
             user = get_user_by_email(get_jwt_identity())
             if user:
-                user_id = user[0]
+                user_id = user[5]
             qsn = get_question_by_id(id)
             if not qsn or qsn[0] != id:
                 msg = 'Question with that id does not exist'
