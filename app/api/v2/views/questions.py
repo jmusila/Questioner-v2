@@ -24,7 +24,7 @@ class AddQuestion(Resource):
         if not question_validator(data):
             user = get_user_by_email(get_jwt_identity())
             if user:
-                user_id = user[5]
+                user_id = user[0]
                 votes = 0
             mtup = get_meetup_by_id(id)
             if not mtup or mtup[0] != id:
