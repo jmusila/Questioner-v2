@@ -38,7 +38,9 @@ class AddComment(Resource):
 
             return {'Status': 201, 'Message': "Comment posted successfully", 'Comment': cmnt}, 201
         return comment_validator(data)
-
+        
+    @v2.doc(security='apikey')
+    @jwt_required
     def get(self, id):
         """
         Get all comments for a specific question
