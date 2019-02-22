@@ -54,6 +54,20 @@ class TestUser(Settings):
         self.assertEqual(res1.status_code, 200)
         self.assertIn('Python', str(res1.data))
 
+    def test_get_single_question(self):
+        """Test API can get a single question by using it's id."""
+        token = self.give_token()
+        res = self.app.post(question_url,
+                            data=json.dumps(self.quiz),
+                            headers=dict(Authorization="Bearer " + token),
+                            content_type='application/json')
+        res1 = json.loads(res.data.decode())
+        self.assertEqual(res.status_code, 201)
+        rv1 = self.app.get('api/v2/meetups/questions/1')
+        data = json.loads(rv1.data.decode())
+        self.assertEqual(rv1.status_code, 200)
+        self.assertIn('This is the body of this question', str(rv1.data))
+
     def test_get_meetup_id_that_doesnt_exist(self):
         token = self.give_token()
         res = self.app.post(meetups_url,

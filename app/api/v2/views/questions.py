@@ -68,6 +68,32 @@ class AddQuestion(Resource):
             return res
         return {"Status": 200, "data": all_questions}, 200 
 
+@v2.route('/questions/<int:id>')
+class SingleQuestion(Resource):
+    def get(self, id):
+        """
+        Get a single question
+        """
+        cur.execute(
+            "SELECT * FROM questions WHERE id={};".format(id))
+        quests = cur.fetchall()
+        mtup = get_meetup_by_id(id)
+        qsn = get_question_by_id(id)
+        if not qsn:
+            msg = 'Question with that id does not exist'
+            return {"Status":404, "Message":msg},404
+        for item in quests:
+            format_quest = {'question_id': item[0],
+                        'user_id': item[1],
+                        'meetup_id': item[2],
+                        'votes': item[3],
+                        'title': item[4],
+                        'body': item[5],
+                        'time_added':str(item[6])}
+        if not mtup or mtup[0] != id:
+            msg = 'Meetup with that id does not exist'
+        return {"status": 200, "question": format_quest}, 200
+
 @v2.route('/questions/<int:id>/upvote')
 class UpVoteQuestion(Resource):
     @v2.doc(security='apikey')
