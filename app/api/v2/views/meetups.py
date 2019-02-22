@@ -41,8 +41,6 @@ class AddMeetup(Resource):
             return {'status': 201, 'message': "meetup added successfully", 'Meetup': mtup}, 201
         return new_meetup_validator(data)
 
-    @v2.doc(security='apikey')
-    @jwt_required
     def get(self):
         """
         Get all meetups
@@ -63,12 +61,10 @@ class AddMeetup(Resource):
         if len(all_meetups) < 1:
             res= {"status":404,"message":"There are no meetups at the moment"},404
             return res
-        return {"status": 200, "data": all_meetups}, 200  
+        return {"status": 200, "data": all_meetups}, 200 
 
 @v2.route('/<int:id>')
 class MeetupDetails(Resource):
-    @v2.doc(security='apikey')
-    @jwt_required
     def get(self, id):
         """
         Get a single meetup

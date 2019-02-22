@@ -42,8 +42,6 @@ class AddQuestion(Resource):
             return {'Status': 201, 'Message': "Question posted successfully", 'Question': qsn}, 201
         return question_validator(data)
 
-    @v2.doc(security='apikey')
-    @jwt_required
     def get(self, id):
         """
         Get all questions for a specific meetup
@@ -72,8 +70,6 @@ class AddQuestion(Resource):
 
 @v2.route('/questions/<int:id>')
 class SingleQuestion(Resource):
-    @v2.doc(security='apikey')
-    @jwt_required
     def get(self, id):
         """
         Get a single question
