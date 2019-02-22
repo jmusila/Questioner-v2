@@ -40,7 +40,9 @@ class AddMeetup(Resource):
             mtup = create_mtup.meetup_data()
             return {'status': 201, 'message': "meetup added successfully", 'Meetup': mtup}, 201
         return new_meetup_validator(data)
-
+        
+    @v2.doc(security='apikey')
+    @jwt_required
     def get(self):
         """
         Get all meetups
@@ -65,6 +67,8 @@ class AddMeetup(Resource):
 
 @v2.route('/<int:id>')
 class MeetupDetails(Resource):
+    @v2.doc(security='apikey')
+    @jwt_required
     def get(self, id):
         """
         Get a single meetup
