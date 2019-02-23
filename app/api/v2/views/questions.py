@@ -24,14 +24,14 @@ class AddQuestion(Resource):
         if not question_validator(data):
             user = get_user_by_email(get_jwt_identity())
             if user:
-                user_id = user[0]
+                username = user[5]
                 votes = 0
             mtup = get_meetup_by_id(id)
             if not mtup or mtup[0] != id:
                 msg = 'Meetup with that id does not exist'
                 return {"Message":msg},404
             meetup_id = mtup[0]
-            create_qsn = Question(user_id, 
+            create_qsn = Question(username, 
             meetup_id,
             votes,
 			data['title'],
@@ -53,7 +53,7 @@ class AddQuestion(Resource):
         all_questions = []
         for item in questions:
             format_quiz = {'question_id': item[0],
-                        'user_id': item[1],
+                        'username': item[1],
                         'meetup_id': item[2],
                         'votes': item[3],
                         'title': item[4],
@@ -102,7 +102,7 @@ class UpVoteQuestion(Resource):
         ''' Up votes '''
         user = get_user_by_email(get_jwt_identity())
         if user:
-            user_id = user[0]
+            username = user[5]
         qsn = get_question_by_id(id)
         if not qsn or qsn[0] != id:
             msg = 'Question with that id does not exist'
@@ -112,7 +112,7 @@ class UpVoteQuestion(Resource):
         cur.execute("UPDATE questions SET votes = '{}'\
         WHERE id={};".format(votes ,id))
         conn.commit()
-        votes_count(user_id, question_id, votes)
+        votes_count(username, question_id, votes)
         msg = 'You have liked this question'
         return {'Status':201, 'Votes':votes, 'Message':msg}
 
@@ -125,7 +125,7 @@ class DownvoteQuestion(Resource):
         ''' Down votes '''
         user = get_user_by_email(get_jwt_identity())
         if user:
-        	user_id = user[0]
+        	username = user[5]
         qsn = get_question_by_id(id)
         if not qsn or qsn[0] != id:
             msg = 'Question with that id does not exist'
@@ -135,7 +135,7 @@ class DownvoteQuestion(Resource):
         cur.execute("UPDATE questions SET votes = '{}'\
         WHERE id={};".format(votes ,id))
         conn.commit()
-        votes_count(user_id, question_id, votes)
+        votes_count(username, question_id, votes)
         msg = 'You have disliked this question'
         return {'Status':201, 'Votes':votes, 'Message':msg}
         

@@ -41,7 +41,7 @@ def create_admin():
     lastname = 'super'
     email = 'admin@super.com'
     phoneNumber = '07989898999'
-    username = 'Asuper'
+    username = 'Admin' 
     password = generate_password_hash('isAdmin')
     isAdmin = 'True'
     time_created = datetime.now()
@@ -75,7 +75,7 @@ def tables():
 
     questions = """
         CREATE TABLE IF NOT EXISTS questions(id serial PRIMARY KEY,
-        user_id int,
+        username varchar,
         meetup_id int,
         votes int,
         title varchar,
@@ -103,7 +103,7 @@ def tables():
 
     comments = """
         CREATE TABLE IF NOT EXISTS comments(id serial PRIMARY KEY,
-        user_id int,
+        username varchar,
         question_id int,
         comment varchar,
         time_added timestamp);
@@ -122,7 +122,7 @@ def tables():
     votes = """
         CREATE TABLE IF NOT EXISTS votes(id serial PRIMARY KEY,
         question_id int,
-        user_id int,
+        username varchar,
         votes int);
         """
 

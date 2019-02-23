@@ -13,8 +13,8 @@ cur = conn.cursor()
 
 class Question:
     """ Questions constructor """
-    def __init__(self, user_id, meetup_id, votes, title, body ):
-        self.user_id = user_id
+    def __init__(self, username, meetup_id, votes, title, body ):
+        self.username = username
         self.meetup_id = meetup_id
         self.votes = 0
         self.title = title
@@ -23,14 +23,14 @@ class Question:
 
     """ Method for inserting a question to db """
     def add_question(self):
-        question = """ INSERT INTO questions (user_id, meetup_id, votes, title, body, time_added) 
+        question = """ INSERT INTO questions (username, meetup_id, votes, title, body, time_added) 
         VALUES ('{}','{}','{}','{}','{}', '{}') """\
-        .format(self.user_id, self.meetup_id, self.votes, self.title, self.body, self.time_added)
+        .format(self.username, self.meetup_id, self.votes, self.title, self.body, self.time_added)
         cur.execute(question)
         conn.commit()
 
     def question_data(self):
-        return dict(user_id =self.user_id, 
+        return dict(username =self.username, 
                     meetup_id = self.meetup_id,
                     votes = self.votes,
                     title = self.title,
