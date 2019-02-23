@@ -41,7 +41,7 @@ def create_admin():
     lastname = 'super'
     email = 'admin@super.com'
     phoneNumber = '07989898999'
-    username = 'Asuper'
+    username = 'Admin'
     password = generate_password_hash('isAdmin')
     isAdmin = 'True'
     time_created = datetime.now()
