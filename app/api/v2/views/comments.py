@@ -24,13 +24,13 @@ class AddComment(Resource):
         if not comment_validator(data):
             user = get_user_by_email(get_jwt_identity())
             if user:
-                user_id = user[0]
+                username = user[5]
             qsn = get_question_by_id(id)
             if not qsn or qsn[0] != id:
                 msg = 'Question with that id does not exist'
                 return {"Message":msg},404
             question_id = qsn[0]
-            create_comment = Comment(user_id, 
+            create_comment = Comment(username, 
                             question_id,
                             data['comment'])
             create_comment.add_comment()
@@ -50,7 +50,7 @@ class AddComment(Resource):
         all_comments = []
         for item in questions:
             format_comment = {'comment_id': item[0],
-                        'user_id': item[1],
+                        'username': item[1],
                         'question_id': item[2],
                         'comment': item[3],
                         'time_added':str(item[4])}
