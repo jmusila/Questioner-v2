@@ -1,0 +1,28 @@
+language: python
+
+python:
+  - 3.6
+
+install:
+  - pip install -r requirements.txt
+  - pip install coveralls
+
+services:
+  - postgresql
+
+before_script:
+- psql -c "create database quest;" -U postgres
+
+- psql -c "create user jonathan WITH PASSWORD '123jonA';" -U postgres
+
+script: 
+  - export APP_SETTINGS="testing"
+  - export SECRET="iamsecretethenuseentheunknowntheundead"
+  - export Test_URL="dbname=quest user=jonathan password=123jonA"
+  - pytest --cov-report term-missing --cov=app/api
+
+after_success:
+  - coveralls
+
+cache:
+  - pip
